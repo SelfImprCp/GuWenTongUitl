@@ -121,11 +121,11 @@ public class LoginUitl {
         String str = mEtName.getText().toString();
 
         if (StringUtils.isEmpty(str)) {
-            ShowToastUtil.showToast(context, R.string.please_password);
+            ShowToastUtil.showToast(context, R.string.verification_code);
             mEtName.requestFocus();
             return false;
-        } else if (str.length() < 6 || str.length() > 20) {
-            ShowToastUtil.showToast(context, "密码为6-20位的数字或字母");
+        } else if (str.length() < 4  ) {
+            ShowToastUtil.showToast(context, "密码4位数字");
             mEtName.requestFocus();
             return false;
         } else {

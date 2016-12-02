@@ -7,7 +7,7 @@ public class MTestUitl {
 
      public static void testCp()
      {
-         System.out.print(" 林楚萍,,,");
+         System.out.print(" lcp,,,");
      }
 
 }

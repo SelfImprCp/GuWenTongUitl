@@ -95,4 +95,22 @@ public class KeyBoardUtils {
     }
 
 
+
+    /**
+     *关闭
+     */
+    public void closeInputJ(Context context, EditText mairu_zuhe_jine, View view) {
+
+        KeyBoardUtils.showSoftKeyboard(mairu_zuhe_jine, context);
+
+
+        InputMethodManager imm = (InputMethodManager)
+                context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
+    }
+
+
+
+
 }

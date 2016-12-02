@@ -19,6 +19,8 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -276,5 +278,32 @@ public class ImageUtils {
 
         return imagePath;
     }
+
+
+
+    /**
+     * 推荐banner 图片 750*298
+     *
+     *
+     *  根据原图的宽和高，算出在手机上的高，
+     *  宽度充满手机屏
+     * @return
+     */
+    public static int getTuiJianBannerHeight(int imgWidth,int imgHeight) {
+
+        float width = DensityUtils.getScreenWidth();
+
+        float biLi = width / imgWidth;
+        int height = (int) (imgHeight * biLi);
+
+
+        LogCp.i(LogCp.CP, ImageLoader.class + " 算出来的图片高度， 推荐" + height);
+
+
+        return height;
+    }
+
+
+
 
 }
