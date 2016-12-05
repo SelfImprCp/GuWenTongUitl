@@ -120,6 +120,64 @@ public class XRefreshListViewFragment<T extends MyEntity> extends MyBaseFragment
         }
     }
 
+
+
+
+
+    /**
+     *
+     * @param
+     */
+    private  void addHeadView()
+    {
+
+
+        if(getHeadView()!=null)
+        {
+            mListView.addHeaderView(getHeadView());
+        }
+
+
+    }
+    /**
+     *
+     * @param
+     */
+    private  void addFooterView(   )
+    {
+        if(getFooterView()!=null)
+        {
+            mListView.addFooterView(getFooterView());
+        }
+
+
+    }
+
+    /**
+     *
+     * @return
+     */
+    public View getHeadView()
+    {
+
+        return  null;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public View getFooterView()
+    {
+
+        return  null;
+    }
+
+
+
+
+
+
     @Override
     public void onDestroyView() {
         mStoreEmptyState = mErrorLayout.getErrorState();
