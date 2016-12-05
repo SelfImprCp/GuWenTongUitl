@@ -78,6 +78,10 @@ public class XRefreshListViewFragment<T extends MyEntity> extends MyBaseFragment
         mListView = (ListView) view.findViewById(R.id.listview);
         mErrorLayout = (EmptyLayout) view.findViewById(R.id.error_layout);
 
+        addHeadView();
+        addFooterView();
+
+
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(
