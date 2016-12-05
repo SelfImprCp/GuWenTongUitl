@@ -315,6 +315,7 @@ public class XRefreshListViewActivity<T extends MyEntity> extends MyBaseActivity
 
         @Override
         public void dataFailuer(int errorNo, String strMsg) {
+            LogCp.i(LogCp.CP, XRefreshListViewActivity.class + "请求列表数据的接口出错了  " + errorNo + ",," + strMsg);
 
         }
     };
