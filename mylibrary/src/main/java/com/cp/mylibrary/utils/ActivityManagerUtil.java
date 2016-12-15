@@ -63,6 +63,7 @@ public class ActivityManagerUtil {
 
     /**
      * 结束当前Activity（堆栈中最后一个压入的）
+     *
      */
     public void finishActivity() {
         Activity activity = activityStack.lastElement();
