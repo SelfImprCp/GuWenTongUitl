@@ -1,13 +1,21 @@
 package com.cp.mylibrary.utils;
 
+import android.annotation.TargetApi;
+import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.os.StatFs;
 import android.util.Log;
+import android.widget.RemoteViews;
 
 import com.cp.mylibrary.R;
+import com.cp.mylibrary.app.Config;
+import com.cp.mylibrary.service.DownloadService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -776,16 +784,67 @@ public class FileUtil {
 
 
     /**
-     * 显示 网页中的文件
+     * 显示选择打开的方式
      */
-    public void showFileForWebView(Context context, String url) {
 
-        //下载文件到SD卡
-        File file = downloadFile(url);
-        //调用适合的阅读器显示文件
-        context.startActivity(getFileIntent(context, file));
+    public void showSelectOpenType(Context context, String filesPath) {
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setAction(Intent.ACTION_VIEW);
+        context.startActivity(showOpenTypeDialog(filesPath));
     }
 
+    public static Intent showOpenTypeDialog(String param) {
+        Log.e("ViChildError", "showOpenTypeDialog");
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setAction(android.content.Intent.ACTION_VIEW);
+        Uri uri = Uri.fromFile(new File(param));
+        intent.setDataAndType(uri, "*/*");
+        return intent;
+    }
+
+
+    /**
+     * 显示 网页中的文件
+     */
+
+    private String fileName = "";
+    private String fileUrl = "";
+
+    public void showFileForWebView(  String url) {
+        fileUrl = url;
+        //判断是否是文件下载链接，如果不是则返回，直接访问
+        fileName = fileUrl.substring(fileUrl.lastIndexOf("/")).replace("/", "");
+        LogCp.i(LogCp.CP, FileUtil.class + " 下载文件的名称 ： " + fileName);
+
+
+        Thread downLoadThread = new Thread(mdownApkRunnable);
+        downLoadThread.start();
+
+
+    }
+
+    /**
+     *  开启一个线程下载文件
+     */
+    private Runnable mdownApkRunnable = new Runnable() {
+        @Override
+        public void run() {
+            File file = new File(Config.DEFAULT_SAVE_FILE_PATH);
+
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+            try {
+                //下载文件到SD卡
+                downloadFile(fileUrl, Config.DEFAULT_SAVE_FILE_PATH, fileName);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    };
 
     /**
      * 下载文件
@@ -793,15 +852,13 @@ public class FileUtil {
      * @param fileUrl
      * @return
      */
-    public File downloadFile(String fileUrl) {
+    public void downloadFile(String fileUrl, String path, String fileName) {
         File apkFile = null;
-        String fileName = fileUrl.substring(fileUrl.lastIndexOf("/"));
         try {
             if (Environment.getExternalStorageState().equals(
                     Environment.MEDIA_MOUNTED)) {
                 // 获得存储卡的路径
-                String sdpath = Environment.getExternalStorageDirectory() + "/";
-                String mSavePath = sdpath + "download";
+
                 URL url = new URL(fileUrl);
                 // 创建连接
                 HttpURLConnection conn = (HttpURLConnection) url
@@ -811,14 +868,14 @@ public class FileUtil {
                 //int length = conn.getContentLength();
                 // 创建输入流
                 InputStream is = conn.getInputStream();
-                File file = new File(mSavePath);
+                File file = new File(path);
                 // 判断文件目录是否存在
                 if (!file.exists()) {
                     file.mkdir();
                 }
-                apkFile = new File(mSavePath, fileName);
+                apkFile = new File(path, fileName);
                 if (apkFile.exists()) {
-                    return apkFile;
+
                 }
                 FileOutputStream fos = new FileOutputStream(apkFile);
                 int count = 0;
@@ -830,44 +887,48 @@ public class FileUtil {
                 fos.flush();
                 fos.close();
                 is.close();
+
+
+                // 下载完成通知安装
+                mHandler.sendEmptyMessage(0);
+
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return apkFile;
-    }
 
-    /**
-     * 获取用于文件打开的intent
-     *
-     * @param file
-     * @return
-     */
-    public Intent getFileIntent(Context context, File file) {
-        Intent intent = new Intent("android.intent.action.VIEW");
-        intent.addCategory("android.intent.category.DEFAULT");
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Uri uri = Uri.fromFile(file);
-        String fileType = getFileType(context, file.getName());
-        intent.setDataAndType(uri, fileType);
-        return intent;
     }
 
 
-    /**
-     * 从配置文件获取要下载的文件后缀和对应的MIME类型
-     *
-     * @param fileName
-     * @return
-     */
-    public String getFileType(Context mContext, String fileName) {
-        String[] names = mContext.getResources().getStringArray(R.array.file_name_array);
-        String[] types = mContext.getResources().getStringArray(R.array.file_type_array);
-        for (int i = 0; i < names.length; i++) {
-            if (fileName.toLowerCase().indexOf(names[i]) >= 0) {
-                return types[i];
+    private Handler mHandler = new Handler() {
+
+        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+        @Override
+        public void handleMessage(Message msg) {
+
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    // 下载完毕
+
+                    File apkfile = new File(Config.DEFAULT_SAVE_FILE_PATH + fileName);
+
+                    LogCp.i(LogCp.CP, FileUtil.class + "下载来的文件 " + apkfile);
+
+
+                    showSelectOpenType(context, Config.DEFAULT_SAVE_FILE_PATH + fileName);
+
+
+                    break;
+                case 2:
+                    break;
+                case 1:
+
+//
+
+                    break;
             }
         }
-        return "";
-    }
+    };
+
 }

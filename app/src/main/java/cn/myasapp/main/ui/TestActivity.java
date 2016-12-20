@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.cp.mylibrary.city.ScrollerNumberPicker;
 import com.cp.mylibrary.utils.AreaParserUitl;
 import com.cp.mylibrary.utils.DateTimePickDialogUtil;
+import com.cp.mylibrary.utils.FileUtil;
 import com.cp.mylibrary.utils.LogCp;
 import com.cp.mylibrary.utils.StringUtils;
 
@@ -114,15 +115,14 @@ public class TestActivity extends BaseActivity {
     private TextView city_select_test;
 
 
-
     @BindView(id = R.id.city_parse_area, click = true)
     private TextView city_parse_area;
 
     @BindView(id = R.id.email_check_text, click = true)
     private TextView email_check_text;
 
-
-
+    @BindView(id = R.id.download_file_show_text, click = true)
+    private TextView download_file_show_text;
 
 
     @Override
@@ -357,11 +357,11 @@ public class TestActivity extends BaseActivity {
 
 
                         String strCity = cityPicker.getSelectedText();
-                        String cityID = cityPicker.getSelectedCityID(provinceID,strCity);
+                        String cityID = cityPicker.getSelectedCityID(provinceID, strCity);
 
 
                         String strCounty = counyPicker.getSelectedText();
-                        String countyID = counyPicker.getSelectedCountyID(cityID,strCounty);
+                        String countyID = counyPicker.getSelectedCountyID(cityID, strCounty);
 
                         LogCp.i(LogCp.CP, TestActivity.class + "选择的省ID：" + provinceID + ",,选择的市ID：" + cityID + ",,选择的区ID：" + countyID);
 
@@ -376,22 +376,23 @@ public class TestActivity extends BaseActivity {
                 areaParserUitl.openGson(TestActivity.this);
 
 
-
-
                 break;
-
-
-
-
-
 
 
             case R.id.email_check_text:
 
 
-                 String strEmail = "321@qq.com";
-          LogCp.i(LogCp.CP,TestActivity.class + "是不是一个emaial :"+StringUtils.isEmail(strEmail) );
+                String strEmail = "321@qq.com";
+                LogCp.i(LogCp.CP, TestActivity.class + "是不是一个emaial :" + StringUtils.isEmail(strEmail));
 
+
+                break;
+
+
+            case R.id.download_file_show_text:
+                String url = "http://47.90.23.136:8012/js/ueditor/net/upload/file/20161209/6361688910084474983115143.pdf";
+                FileUtil fileUtil = new FileUtil(TestActivity.this);
+                fileUtil.showFileForWebView(url);
 
                 break;
 

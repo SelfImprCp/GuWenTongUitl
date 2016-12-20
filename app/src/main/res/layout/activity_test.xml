@@ -194,6 +194,15 @@
                 android:text="  检查邮箱   " />
 
 
+
+            <TextView
+                android:id="@+id/download_file_show_text"
+
+                style="@style/test_textview_style"
+                android:text="  下载文件并显示，一般用在网页中  " />
+
+
+
         </LinearLayout>
     </com.cp.mylibrary.custom.CPScrollView>
 
