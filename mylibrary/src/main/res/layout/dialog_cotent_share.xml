@@ -44,6 +44,7 @@
 
         <LinearLayout
             android:id="@+id/ly_share_sina_weibo"
+            android:visibility="invisible"
             style="@style/dialog_content_share_ll">
 
             <TextView

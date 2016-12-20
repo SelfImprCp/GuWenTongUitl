@@ -10,8 +10,8 @@ import java.io.File;
 public class Config {
      public static int PAGE_SIXE = 20;
 
-     public static final String WEICHAT_APPID = "wx6a54a8cecdce38e9";
-     public static final String WEICHAT_SECRET = "9f67580ae92be8fe3260e0c9b06eff09";
+     public static final String WEICHAT_APPID = "wx5301e84c1bef747a";
+     public static final String WEICHAT_SECRET = "3672641fd138a398cd9b34fb9a92296a";
 
 
      public static final String SINA_APPID = "3182205453";
@@ -29,6 +29,6 @@ public class Config {
      public final static String DEFAULT_SAVE_FILE_PATH = Environment
              .getExternalStorageDirectory()
              + File.separator
-             + "xiaoshutou"
+             + "guwentong"
              + File.separator + "download" + File.separator;
 }
