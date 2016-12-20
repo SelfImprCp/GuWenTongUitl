@@ -42,4 +42,26 @@
         <attr name="type" />
     </declare-styleable>
 
+
+
+    <string-array name="file_name_array">
+         <item>.doc</item>
+        <item>.xls</item>
+        <item>.ppt</item>
+        <item>.pdf</item>
+
+    </string-array>
+
+
+
+    <string-array name="file_type_array">
+        <item>application/msword</item>
+        <item>application/vnd.ms-excel</item>
+        <item>application/vnd.ms-powerpoint</item>
+        <item>application/pdf</item>
+
+    </string-array>
+
+
+
 </resources>

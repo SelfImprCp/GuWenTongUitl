@@ -1,9 +1,13 @@
 package com.cp.mylibrary.utils;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Environment;
 import android.os.StatFs;
 import android.util.Log;
+
+import com.cp.mylibrary.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -12,6 +16,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -48,19 +54,16 @@ public class FileUtil {
     private Context context;
 
 
-
 //    public static String DATA_DATA_FILE_PATH = "/data/data/cn.myasapp.main/files/";
 //
 //    public static String DATA_DATA_CACHE_PATH = "/data/data/cn.myasapp.main/cache/";
 
-   public static String getDataDataFilePath(Context context)
-   {
+    public static String getDataDataFilePath(Context context) {
         return "/data/data/" + AppUtils.getPackageName(context) + "/files/";
 
-   }
+    }
 
-    public static String getDataDataCachePath(Context context)
-    {
+    public static String getDataDataCachePath(Context context) {
         return "/data/data/" + AppUtils.getPackageName(context) + "/cache/";
 
     }
@@ -182,7 +185,7 @@ public class FileUtil {
             //
 
             if (file.exists()) {
-                  isSuccess = file.delete();
+                isSuccess = file.delete();
                 LogCp.i(LogCp.CP, FileUtil.class + "   删除 文件  文件路经：  " + path + name + " 是否删除成功：" + isSuccess);
 
             } else {
@@ -195,7 +198,7 @@ public class FileUtil {
 
         }
 
-         return  isSuccess;
+        return isSuccess;
 
     }
 
@@ -240,14 +243,13 @@ public class FileUtil {
     public static boolean createDirectory(String directoryName) throws IOException {
         boolean status;
         if (!directoryName.equals("")) {
-              File newPath = new File(SDCardUtils.SDPATH + directoryName);
+            File newPath = new File(SDCardUtils.SDPATH + directoryName);
             status = newPath.mkdirs();
             //status = true;
         } else
             status = false;
         return status;
     }
-
 
 
     /**
@@ -289,32 +291,31 @@ public class FileUtil {
     }
 
 
-
-
     /**
-     *  写内容到sdCard
+     * 写内容到sdCard
+     *
      * @param content
      * @param pathName
      * @param fileName
      */
     public static boolean saveContentToSDCard(String content, String pathName, String fileName) {
 
-         boolean isSaveSuccess = false;
+        boolean isSaveSuccess = false;
         try {
             File path = new File(pathName);
-            File file = new File(pathName +"/"+ fileName);
+            File file = new File(pathName + "/" + fileName);
             if (!path.exists()) {
 
-              //  mkdir()：只能创建一层目录.
-                boolean isSuccess =  path.mkdirs();
+                //  mkdir()：只能创建一层目录.
+                boolean isSuccess = path.mkdirs();
                 LogCp.i(LogCp.CP, FileUtil.class + "  Create the file dir  " + pathName + " is success  " + isSuccess);
 
             }
             if (!file.exists()) {
 
-                boolean isSuccessS =  file.createNewFile();
+                boolean isSuccessS = file.createNewFile();
                 LogCp.i(LogCp.CP, FileUtil.class + "  Create the file  " + fileName + " is success " + isSuccessS);
-           }
+            }
             FileOutputStream
                     stream = new FileOutputStream(file);
 
@@ -328,22 +329,17 @@ public class FileUtil {
             LogCp.e(LogCp.CP, FileUtil.class + "  Error on writeFilToSD " + e.getMessage());
             e.printStackTrace();
         }
-        return  isSaveSuccess;
+        return isSaveSuccess;
     }
 
     /**
-
      * 读取SD卡中文本文件
-
      *
-
      * @param fileName
-
      * @return
-
      */
 
-    public static String readSDFile(String pathName,String fileName) {
+    public static String readSDFile(String pathName, String fileName) {
 
         StringBuffer sb = new StringBuffer();
 
@@ -379,7 +375,6 @@ public class FileUtil {
 
 
     /**
-     *
      * @param inStream
      * @return
      */
@@ -401,7 +396,6 @@ public class FileUtil {
         }
         return null;
     }
-
 
 
     /**
@@ -451,10 +445,10 @@ public class FileUtil {
      * @param
      * @return
      */
-    public static long getFileSize(String path,String fileName) {
+    public static long getFileSize(String path, String fileName) {
         long size = 0;
 
-        File file = new File(path +fileName);
+        File file = new File(path + fileName);
         if (file != null && file.exists()) {
             size = file.length();
         }
@@ -545,10 +539,10 @@ public class FileUtil {
      * @param name
      * @return
      */
-    public static boolean checkFileExists(String path ,String name) {
+    public static boolean checkFileExists(String path, String name) {
         boolean status;
         if (!name.equals("")) {
-             File newPath = new File(path + name);
+            File newPath = new File(path + name);
             status = newPath.exists();
         } else {
             status = false;
@@ -567,17 +561,13 @@ public class FileUtil {
     }
 
 
-
-
-
-
     /**
      * 删除文件
      *
      * @param
      * @return
      */
-    public static boolean deleteFile(String path,String fileName) {
+    public static boolean deleteFile(String path, String fileName) {
         boolean status;
         SecurityManager checker = new SecurityManager();
 
@@ -723,7 +713,6 @@ public class FileUtil {
     }
 
 
-
     /**
      * 截取路径名
      *
@@ -751,7 +740,6 @@ public class FileUtil {
         savedir = null;
         return savePath;
     }
-
 
 
     /**
@@ -787,4 +775,99 @@ public class FileUtil {
     }
 
 
+    /**
+     * 显示 网页中的文件
+     */
+    public void showFileForWebView(Context context, String url) {
+
+        //下载文件到SD卡
+        File file = downloadFile(url);
+        //调用适合的阅读器显示文件
+        context.startActivity(getFileIntent(context, file));
+    }
+
+
+    /**
+     * 下载文件
+     *
+     * @param fileUrl
+     * @return
+     */
+    public File downloadFile(String fileUrl) {
+        File apkFile = null;
+        String fileName = fileUrl.substring(fileUrl.lastIndexOf("/"));
+        try {
+            if (Environment.getExternalStorageState().equals(
+                    Environment.MEDIA_MOUNTED)) {
+                // 获得存储卡的路径
+                String sdpath = Environment.getExternalStorageDirectory() + "/";
+                String mSavePath = sdpath + "download";
+                URL url = new URL(fileUrl);
+                // 创建连接
+                HttpURLConnection conn = (HttpURLConnection) url
+                        .openConnection();
+                conn.connect();
+                // 获取文件大小
+                //int length = conn.getContentLength();
+                // 创建输入流
+                InputStream is = conn.getInputStream();
+                File file = new File(mSavePath);
+                // 判断文件目录是否存在
+                if (!file.exists()) {
+                    file.mkdir();
+                }
+                apkFile = new File(mSavePath, fileName);
+                if (apkFile.exists()) {
+                    return apkFile;
+                }
+                FileOutputStream fos = new FileOutputStream(apkFile);
+                int count = 0;
+                int numread = 0;
+                byte buf[] = new byte[1024];
+                while ((numread = is.read(buf)) != -1) {
+                    fos.write(buf, 0, numread);
+                }
+                fos.flush();
+                fos.close();
+                is.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return apkFile;
+    }
+
+    /**
+     * 获取用于文件打开的intent
+     *
+     * @param file
+     * @return
+     */
+    public Intent getFileIntent(Context context, File file) {
+        Intent intent = new Intent("android.intent.action.VIEW");
+        intent.addCategory("android.intent.category.DEFAULT");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Uri uri = Uri.fromFile(file);
+        String fileType = getFileType(context, file.getName());
+        intent.setDataAndType(uri, fileType);
+        return intent;
+    }
+
+
+    /**
+     * 从配置文件获取要下载的文件后缀和对应的MIME类型
+     *
+     * @param fileName
+     * @return
+     */
+    public String getFileType(Context mContext, String fileName) {
+        String[] names = mContext.getResources().getStringArray(R.array.file_name_array);
+        String[] types = mContext.getResources().getStringArray(R.array.file_type_array);
+        for (int i = 0; i < names.length; i++) {
+            if (fileName.toLowerCase().indexOf(names[i]) >= 0) {
+                return types[i];
+            }
+        }
+        return "";
+    }
 }
