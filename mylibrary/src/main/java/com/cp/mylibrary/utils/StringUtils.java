@@ -312,6 +312,20 @@ public class StringUtils {
 
         return jieguo;
     }
+    /**
+     * 截取字符串 指定字符串
+     *
+     * @param start
+     * @param end
+     * @param decry
+     * @return
+     */
+    public static String getSubString(String start, int end, String decry) {
+        String jieguo = decry.substring(decry.indexOf(start), end);
+
+
+        return jieguo;
+    }
 
 
     /**
