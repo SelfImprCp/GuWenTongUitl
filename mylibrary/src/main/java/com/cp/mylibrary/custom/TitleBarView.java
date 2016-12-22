@@ -159,6 +159,7 @@ public class TitleBarView extends RelativeLayout {
 
     }
 
+
     /**
      *
      * @return
