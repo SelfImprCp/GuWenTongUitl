@@ -231,7 +231,7 @@ public abstract class ListBaseAdapter<T extends MyEntity> extends BaseAdapter {
                 }
                 ProgressBar progress = (ProgressBar) mFooterView
                         .findViewById(R.id.progressbar);
-                TextView text = (TextView) mFooterView.findViewById(R.id.text);
+              //  TextView text = (TextView) mFooterView.findViewById(R.id.text);
                 switch (getState()) {
                     case STATE_LOAD_MORE:
                         setFooterViewLoading();
@@ -239,28 +239,27 @@ public abstract class ListBaseAdapter<T extends MyEntity> extends BaseAdapter {
                     case STATE_NO_MORE:
                         mFooterView.setVisibility(View.VISIBLE);
                         progress.setVisibility(View.GONE);
-                        text.setVisibility(View.VISIBLE);
-                        text.setText(_loadFinishText);
+                        //     text.setVisibility(View.VISIBLE);
+                        //     text.setText(_loadFinishText);
                         break;
                     case STATE_EMPTY_ITEM:
                         progress.setVisibility(View.GONE);
                         mFooterView.setVisibility(View.VISIBLE);
-                        text.setText(_noDateText);
+                        //       text.setText(_noDateText);
                         break;
                     case STATE_NETWORK_ERROR:
                         mFooterView.setVisibility(View.VISIBLE);
                         progress.setVisibility(View.GONE);
-                        text.setVisibility(View.VISIBLE);
-                        if (NetWorkUtil.hasInternetConnected(mContext) ) {
-                            text.setText("加载出错了");
-                        } else {
-                            text.setText("没有可用的网络");
-                        }
+//                        text.setVisibility(View.VISIBLE);
+//                        if (NetWorkUtil.hasInternetConnected(mContext) ) {
+//                            text.setText("加载出错了");
+//                        } else {
+//                            text.setText("没有可用的网络");
+//                        }
                         break;
                     default:
                         progress.setVisibility(View.GONE);
                         mFooterView.setVisibility(View.GONE);
-                        text.setVisibility(View.GONE);
                         break;
                 }
                 return mFooterView;
