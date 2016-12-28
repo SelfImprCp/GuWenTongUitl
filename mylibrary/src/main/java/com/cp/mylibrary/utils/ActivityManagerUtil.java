@@ -1,6 +1,7 @@
 package com.cp.mylibrary.utils;
 
 import android.app.Activity;
+import android.os.Process;
 
 import java.util.Stack;
 
@@ -116,10 +117,14 @@ public class ActivityManagerUtil {
     /**
      * 退出应用程序
      */
+    /**
+     * 退出应用程序
+     */
     public void AppExit() {
         try {
             finishAllActivity();
-            // System.exit(0);
+            Process.killProcess(Process.myPid());
+            System.exit(0);
         } catch (Exception e) {
         }
     }
