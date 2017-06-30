@@ -138,7 +138,7 @@ public abstract class UpdateManagerUtil {
      *
      * @param updateRes
      */
-    public void onFinshCheck(UpdateRes updateRes, String currentVersion, boolean isDialogSelect) {
+    public void onFinshCheck(UpdateRes updateRes, int currentVersion, boolean isDialogSelect) {
         if (haveNew(mContext, updateRes, currentVersion)) {
 
             if (isDialogSelect) {
@@ -160,7 +160,7 @@ public abstract class UpdateManagerUtil {
      * @param updateRes
      * @return
      */
-    public boolean haveNew(Context context, UpdateRes updateRes, String currentVersion) {
+    public boolean haveNew(Context context, UpdateRes updateRes, int currentVersion) {
         if (updateRes == null) {
             return false;
         }
@@ -172,7 +172,7 @@ public abstract class UpdateManagerUtil {
 
         LogCp.i(LogCp.CP, UpdateManagerUtil.class + "取得的版本，" + currentVersion + " 传来的版本" + updateRes.getVersion());
 
-        if (!currentVersion.equals(updateRes.getVersion())) {
+        if (currentVersion < updateRes.getVersionCode()) {
             haveNew = true;
         }
 
@@ -234,7 +234,7 @@ public abstract class UpdateManagerUtil {
 		 */
 
 
-        simplecDialog = BasicDialog.versionDialog(mContext, "发现新版本:"+updateRes.getVersion(),
+        simplecDialog = BasicDialog.versionDialog(mContext, "发现新版本:" + updateRes.getVersion(),
                 updateRes.getDesc(), "立即更新", "下次再说", new OnClickListener() {
 
                     @Override
@@ -261,8 +261,6 @@ public abstract class UpdateManagerUtil {
         simplecDialog.show();
 
 
-
-
     }
 
     /**
@@ -287,14 +285,14 @@ public abstract class UpdateManagerUtil {
     /**
      * 取得 当前应用版本号
      *
-     * @param packageName
+     * @param
      * @return
      */
-    public static int getVersionCode(Context context, String packageName) {
+    public static int getVersionCode(Context context) {
         int versionCode = 0;
         try {
             versionCode = context.getPackageManager()
-                    .getPackageInfo(packageName, 0).versionCode;
+                    .getPackageInfo(context.getPackageName(), 0).versionCode;
         } catch (PackageManager.NameNotFoundException ex) {
             versionCode = 0;
         }
@@ -370,7 +368,7 @@ public abstract class UpdateManagerUtil {
                 binder.addCallback(callback);
                 binder.start();
 
-                LogCp.i(LogCp.CP,  "   启动下载  版本   "  );
+                LogCp.i(LogCp.CP, "   启动下载  版本   ");
 
 
             }
