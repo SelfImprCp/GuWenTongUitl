@@ -161,7 +161,7 @@ public class MyHttpClient {
     /**
      * 完整url访问
      * @param url
-     * @param params3
+
      * @param handler
      */
     public static void postAbsoluteUrl(String url, MyHttpParams params,
