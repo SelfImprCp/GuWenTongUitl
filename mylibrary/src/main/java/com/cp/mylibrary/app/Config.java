@@ -27,6 +27,8 @@ public class Config {
 
 
 
+
+
      // 默认存放文件下载的路径
      public final static String DEFAULT_SAVE_FILE_PATH = Environment
              .getExternalStorageDirectory()
