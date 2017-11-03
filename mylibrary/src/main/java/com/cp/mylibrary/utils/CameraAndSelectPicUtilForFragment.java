@@ -352,6 +352,9 @@ public class CameraAndSelectPicUtilForFragment {
 		protraitPath = FILE_SAVEPATH + cropFileName;
 		protraitFile = new File(protraitPath);
 
+
+
+
 		cropUri = Uri.fromFile(protraitFile);
 		return this.cropUri;
 	}
