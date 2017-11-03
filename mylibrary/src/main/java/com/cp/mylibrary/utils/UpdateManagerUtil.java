@@ -170,7 +170,7 @@ public abstract class UpdateManagerUtil {
 //
 
 
-        LogCp.i(LogCp.CP, UpdateManagerUtil.class + "取得的版本，" + currentVersion + " 传来的版本" + updateRes.getVersion());
+        LogCp.i(LogCp.CP, UpdateManagerUtil.class + "取得的版本，" + currentVersion + " 传来的版本" + updateRes.getVersionCode());
 
         if (currentVersion < updateRes.getVersionCode()) {
             haveNew = true;
