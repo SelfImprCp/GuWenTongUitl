@@ -32,13 +32,13 @@ import java.util.Date;
  * 拍照或选择图片 上传的工具类
  *
  *  使用方法详见 TestCreateTwoCode
- * 
+ *
  * @author Administrator
- * 
+ *
  */
 public class CameraAndSelectPicUtilForFragment {
 
-	
+
 	// 遮罩
 	private View myview_user;
 	 /**
@@ -51,9 +51,9 @@ public class CameraAndSelectPicUtilForFragment {
     android:background="#AF000000"/>
 	  */
 
-	
+
 	private Context mContext;
-	
+
 	private Fragment mFragment;
  private Activity mActivity;
 
@@ -70,7 +70,7 @@ public class CameraAndSelectPicUtilForFragment {
 	private final static int CROP = 200;
 
 	 /**
-	  *  
+	  *
 	  * @param context
 	  * @param
 	  * @param view 设置遮罩
@@ -82,7 +82,7 @@ public class CameraAndSelectPicUtilForFragment {
 	this.mActivity = activity;
 	}
 
-	
+
 	/**
 	 *  传入的View 为点击触发些pop的view
 	 * @param parent
@@ -92,10 +92,10 @@ public class CameraAndSelectPicUtilForFragment {
 		PopupWindows popWin = new PopupWindows(mContext, parent);
 		return popWin;
 	}
-   
+
 	 /**
 	  * 取得 上传的图片的文件
-	  * 
+	  *
 	  */
 	 public File getUpFile()
 	 {
@@ -110,8 +110,8 @@ public class CameraAndSelectPicUtilForFragment {
 	 {
 		 return  protraitPath;
 	 }
-	
-	 
+
+
 	  /**
 	   *取得  指定上传的图片的尺寸,如果要原图，宽高为0，
 	   * @param w
@@ -211,7 +211,7 @@ public class CameraAndSelectPicUtilForFragment {
 
 	/**
 	 * 设置添加屏幕的背景透明度
-	 * 
+	 *
 	 * @param bgAlpha
 	 */
 	public void backgroundAlpha(float bgAlpha) {
@@ -222,7 +222,7 @@ public class CameraAndSelectPicUtilForFragment {
 
 	/*
 	 * 添加新笔记时弹出的popWin关闭的事件，主要是为了将背景透明度改回来
-	 * 
+	 *
 	 * @author cg
 	 */
 	class poponDismissListener implements PopupWindow.OnDismissListener {
@@ -276,7 +276,7 @@ public class CameraAndSelectPicUtilForFragment {
 
 	/**
 	 * 选择图片裁剪
-	 * 
+	 *
 	 * @param
 	 */
 	private void startImagePick() {
@@ -300,7 +300,7 @@ public class CameraAndSelectPicUtilForFragment {
 
 	/**
 	 * 拍照后裁剪
-	 * 
+	 *
 	 * @param data
 	 *            原始图片
 	 * @param
