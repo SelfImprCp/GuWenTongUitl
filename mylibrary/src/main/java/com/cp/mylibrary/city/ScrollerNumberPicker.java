@@ -14,7 +14,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-
 import com.cp.mylibrary.R;
 import com.cp.mylibrary.utils.LogCp;
 
@@ -88,8 +87,8 @@ public class ScrollerNumberPicker extends View {
 
 	private List<Cityinfo> province_list = new ArrayList<Cityinfo>();
 	private HashMap<String, List<Cityinfo>> city_map = new HashMap<String, List<Cityinfo>>();
-	private HashMap<String, List<Cityinfo>> couny_map = new HashMap<String, List<Cityinfo>>();
-
+//	private HashMap<String, List<Cityinfo>> couny_map = new HashMap<String, List<Cityinfo>>();
+//
 
 
 
@@ -140,34 +139,75 @@ public class ScrollerNumberPicker extends View {
 		return "";
 	}
 
+
+
+
+
 	/**
-	 *  通过区名名取得区id
+	 *  通过市名名取得市id
 	 *
 	 * @return
 	 */
-	public String getSelectedCountyID(String cityID,String countyStr) {
+	public String getSelectedCityIndex(String provinceID ,String cityStr) {
 
 		LogCp.i(LogCp.CP,ScrollerNumberPicker.class +
-				"来取的名： 外面 区" + countyStr );
-		List<Cityinfo> cityList = couny_map.get(cityID);
+				"来取的名： 外面 市" + cityStr +" city map " + city_map.size() );
 
- if (cityList!=null)
- {for (Cityinfo cityinfo : cityList) {
+		// 通过省名取得这个省id下面所有的市
+
+		List<Cityinfo> cityList = city_map.get(provinceID);
+
+		LogCp.i(LogCp.CP,ScrollerNumberPicker.class +
+				"来取的名： 当前省下多少市" + cityList);
+		if (cityList!=null)
+		{
 
 
-	 if (cityinfo.getCity_name().equals(countyStr))
-		 return cityinfo.getId();
- }
 
- }
+			 for (int i = 0;i<cityList.size();i++)
+			 {
+				 if (cityList.get(i).getCity_name().equals(cityStr))
+					 return  i+"";
+			 }
+
+		}
+
 
 		return "";
 	}
 
 
 
+
+
+	/**
+	 *  通过区名名取得区id
+	 *
+	 * @return
+	 */
+//	public String getSelectedCountyID(String cityID,String countyStr) {
+//
+//		LogCp.i(LogCp.CP,ScrollerNumberPicker.class +
+//				"来取的名： 外面 区" + countyStr );
+//		List<Cityinfo> cityList = couny_map.get(cityID);
+//
+// if (cityList!=null)
+// {for (Cityinfo cityinfo : cityList) {
+//
+//
+//	 if (cityinfo.getCity_name().equals(countyStr))
+//		 return cityinfo.getId();
+// }
+//
+// }
+//
+//		return "";
+//	}
+
+
+
 	public ScrollerNumberPicker(Context context, AttributeSet attrs,
-			int defStyle) {
+                                int defStyle) {
 		super(context, attrs, defStyle);
 		// TODO Auto-generated constructor stub
 		init(context, attrs);
@@ -570,12 +610,12 @@ public class ScrollerNumberPicker extends View {
 
 	 * @param data
 	 */
-	public void setData(ArrayList<String> data,List<Cityinfo> province_list,HashMap<String, List<Cityinfo>> city_map,HashMap<String, List<Cityinfo>> couny_map) {
+	public void setData(ArrayList<String> data, List<Cityinfo> province_list, HashMap<String, List<Cityinfo>> city_map ) {
 
 		this.dataList = data;
 		this.province_list = province_list;
 		this.city_map = city_map;
-		this.couny_map = couny_map;
+
 		initData();
 	}
 
