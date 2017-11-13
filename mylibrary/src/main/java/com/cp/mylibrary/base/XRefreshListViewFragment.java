@@ -63,7 +63,7 @@ public class XRefreshListViewFragment<T extends MyEntity> extends MyBaseFragment
 
     protected int mStoreEmptyState = -1;
 
-    public   String myCachePath = "";
+    public String myCachePath = "";
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -80,7 +80,6 @@ public class XRefreshListViewFragment<T extends MyEntity> extends MyBaseFragment
 
         addHeadView();
         addFooterView();
-
 
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -124,64 +123,6 @@ public class XRefreshListViewFragment<T extends MyEntity> extends MyBaseFragment
         }
     }
 
-
-
-
-
-    /**
-     *
-     * @param
-     */
-    private  void addHeadView()
-    {
-
-
-        if(getHeadView()!=null)
-        {
-            mListView.addHeaderView(getHeadView());
-        }
-
-
-    }
-    /**
-     *
-     * @param
-     */
-    private  void addFooterView(   )
-    {
-        if(getFooterView()!=null)
-        {
-            mListView.addFooterView(getFooterView());
-        }
-
-
-    }
-
-    /**
-     *
-     * @return
-     */
-    public View getHeadView()
-    {
-
-        return  null;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public View getFooterView()
-    {
-
-        return  null;
-    }
-
-
-
-
-
-
     @Override
     public void onDestroyView() {
         mStoreEmptyState = mErrorLayout.getErrorState();
@@ -198,7 +139,7 @@ public class XRefreshListViewFragment<T extends MyEntity> extends MyBaseFragment
         return null;
     }
 
-    ;
+
 
     @Override
     public void onRefresh() {
@@ -222,39 +163,18 @@ public class XRefreshListViewFragment<T extends MyEntity> extends MyBaseFragment
      * @author 火蚁 2015-2-9 下午3:16:12
      */
     protected void sendRequestData(boolean refresh) {
-//        String key = getCacheKey();
-//        if (isReadCacheData(refresh)) {
-//            readCacheData(key);
-//        } else {
-        // 取新的数据
-     //   requestData();
-        // }
 
         LogCp.i(LogCp.CP, XRefreshListViewFragment.class + "  设置缓存的ke   " + myCachePath);
 
+        String cacheStr = "";
+        if (!StringUtils.isEmpty(myCachePath)) {
+            cacheStr = (String) MyCache.getMyCache(getActivity()).readObject(myCachePath + mCurrentPage);
 
-        String cacheStr = (String) MyCache.getMyCache(getActivity()).readObject(myCachePath + mCurrentPage);
+        }
+
         LogCp.i(LogCp.CP, XRefreshListViewFragment.class + " 缓存中取出，  列表 数据  " + cacheStr);
 
-//
-//        if (NetWorkUtil.hasInternetConnected(getActivity()))
-//        {
-//            requestData();
-//        }else
-//        {
-//            mErrorLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
-//
-//        }
-
-
-        if (!StringUtils.isEmpty(cacheStr)) {
-
-
-//            parseList(cacheStr);
-            executeParserTask(cacheStr);
-
-
-        } else {
+        if (refresh) {
             if (NetWorkUtil.hasInternetConnected(getActivity())) {
 
                 requestData();
@@ -263,10 +183,25 @@ public class XRefreshListViewFragment<T extends MyEntity> extends MyBaseFragment
                 mErrorLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
 
             }
+        } else {
+            if (!StringUtils.isEmpty(cacheStr)) {
 
+
+                executeParserTask(cacheStr);
+
+
+            } else {
+                if (NetWorkUtil.hasInternetConnected(getActivity())) {
+
+                    requestData();
+
+                } else {
+                    mErrorLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
+
+                }
+
+            }
         }
-
-
 
 
     }
@@ -314,14 +249,11 @@ public class XRefreshListViewFragment<T extends MyEntity> extends MyBaseFragment
      */
 
 
+    public void setCachePath(String cachePath) {
 
+        myCachePath = cachePath;
 
-     public  void setCachePath(String cachePath)
-     {
-
-         myCachePath = cachePath;
-
-     }
+    }
 
     public MyResponseHandler responseHandler = new MyResponseHandler() {
 
@@ -329,23 +261,12 @@ public class XRefreshListViewFragment<T extends MyEntity> extends MyBaseFragment
         public void dataSuccess(String res) {
 
             LogCp.i(LogCp.CP, XRefreshListViewFragment.class + "请求来的数据 " + res);
+            // 保存到缓存上中
+            if (!StringUtils.isEmpty(myCachePath))
+                MyCache.getMyCache(mContext).saveObject(myCachePath + mCurrentPage, res);
 
             executeParserTask(res);
-//
-//     // 保存到缓存上中
-//            MyCache.getMyCache(mContext).saveObject(myCachePath, res);
-//
 
-
-//            if (mCurrentPage == 0 && needAutoRefresh()) {
-//                AppContext.putToLastRefreshTime(getCacheKey(),
-//                        StringUtils.getCurTimeStr());
-//            }
-
-//            if (mState == STATE_REFRESH) {
-//                onRefreshNetworkSuccess();
-//            }
-//            executeParserTask(responseBytes);
         }
 
         @Override
@@ -357,8 +278,7 @@ public class XRefreshListViewFragment<T extends MyEntity> extends MyBaseFragment
         @Override
         public void dataFailuer(int errorNo, String strMsg) {
 
-            LogCp.i(LogCp.CP, XRefreshListViewFragment.class + "请求列表数据 的时候，出异常了 ,代码：" + errorNo + "， 描述："  + strMsg);
-
+            LogCp.i(LogCp.CP, XRefreshListViewFragment.class + "请求列表数据 的时候，出异常了 ,代码：" + errorNo + "， 描述：" + strMsg);
 
 
         }
@@ -434,10 +354,6 @@ public class XRefreshListViewFragment<T extends MyEntity> extends MyBaseFragment
             try {
 
 
-                // 保存到缓存上中
-                MyCache.getMyCache(mContext).saveObject(myCachePath + mCurrentPage, reponseData);
-
-
                 mData = parseList(reponseData);
                 LogCp.i(LogCp.CP, XRefreshListViewFragment.class + "解析 出来的数据 的，值 ，，"
                         + mData);
@@ -457,7 +373,7 @@ public class XRefreshListViewFragment<T extends MyEntity> extends MyBaseFragment
             if (parserError) {
 
                 //解析出错了
-                //  readCacheData(getCacheKey());
+
             } else {
 
                 executeOnLoadDataSuccess(mData);
@@ -473,7 +389,6 @@ public class XRefreshListViewFragment<T extends MyEntity> extends MyBaseFragment
         if (data == null) {
             data = new ArrayList<T>();
         }
-
 
 
         mErrorLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
@@ -522,7 +437,6 @@ public class XRefreshListViewFragment<T extends MyEntity> extends MyBaseFragment
     }
 
 
-
     /**
      * 是否需要隐藏listview，显示无数据状态
      *
@@ -530,6 +444,47 @@ public class XRefreshListViewFragment<T extends MyEntity> extends MyBaseFragment
      */
     protected boolean needShowEmptyNoData() {
         return true;
+    }
+
+
+    /**
+     * @param
+     */
+    private void addHeadView() {
+
+
+        if (getHeadView() != null) {
+            mListView.addHeaderView(getHeadView());
+        }
+
+
+    }
+
+    /**
+     * @param
+     */
+    private void addFooterView() {
+        if (getFooterView() != null) {
+            mListView.addFooterView(getFooterView());
+        }
+
+
+    }
+
+    /**
+     * @return
+     */
+    public View getHeadView() {
+
+        return null;
+    }
+
+    /**
+     * @return
+     */
+    public View getFooterView() {
+
+        return null;
     }
 
 
