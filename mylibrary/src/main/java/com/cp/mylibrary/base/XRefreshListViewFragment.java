@@ -172,7 +172,6 @@ public class XRefreshListViewFragment<T extends MyEntity> extends MyBaseFragment
 
         }
 
-        LogCp.i(LogCp.CP, XRefreshListViewFragment.class + " 缓存中取出，  列表 数据  " + cacheStr);
 
         if (refresh) {
             if (NetWorkUtil.hasInternetConnected(getActivity())) {
@@ -187,6 +186,7 @@ public class XRefreshListViewFragment<T extends MyEntity> extends MyBaseFragment
         } else {
             if (!StringUtils.isEmpty(cacheStr)) {
 
+                LogCp.i(LogCp.CP, XRefreshListViewFragment.class + " 缓存中取出，  列表 数据  " + cacheStr);
 
                 executeParserTask(cacheStr);
 
