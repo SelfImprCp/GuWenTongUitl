@@ -175,7 +175,7 @@ public class XRefreshListViewFragment<T extends MyEntity> extends MyBaseFragment
 
         if (refresh) {
             if (NetWorkUtil.hasInternetConnected(getActivity())) {
-                LogCp.i(LogCp.CP, XRefreshListViewFragment.class + "  来刷新了 " + cacheStr);
+                LogCp.i(LogCp.CP, XRefreshListViewFragment.class + "  来刷新了 "    );
 
                 requestData();
 

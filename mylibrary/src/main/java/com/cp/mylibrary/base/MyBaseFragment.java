@@ -35,7 +35,6 @@ public class MyBaseFragment extends SupportFragment {
 
 
         super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
 
 
         if (!NetWorkUtil.hasInternetConnected(getActivity())) {
@@ -85,9 +84,8 @@ public class MyBaseFragment extends SupportFragment {
     public void onDestroy() {
 
         super.onDestroy();
-        //     EventBus.getDefault().unregister(this);
 
-    }
+         }
 
 
     /**
@@ -125,6 +123,5 @@ public class MyBaseFragment extends SupportFragment {
     }
 
 
-    public void onEvent(BaseEvent event) {
-    }
+
 }
