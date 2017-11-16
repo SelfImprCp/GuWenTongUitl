@@ -26,7 +26,7 @@ import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.UmengTool;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
-import com.umeng.socialize.handler.UMWXHandler;
+
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 

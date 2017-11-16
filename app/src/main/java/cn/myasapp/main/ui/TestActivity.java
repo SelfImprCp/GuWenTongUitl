@@ -361,9 +361,9 @@ public class TestActivity extends BaseActivity {
 
 
                         String strCounty = counyPicker.getSelectedText();
-                        String countyID = counyPicker.getSelectedCountyID(cityID, strCounty);
+//                        String countyID = counyPicker.getSelectedCountyID(cityID, strCounty);
 
-                        LogCp.i(LogCp.CP, TestActivity.class + "选择的省ID：" + provinceID + ",,选择的市ID：" + cityID + ",,选择的区ID：" + countyID);
+//                        LogCp.i(LogCp.CP, TestActivity.class + "选择的省ID：" + provinceID + ",,选择的市ID：" + cityID + ",,选择的区ID：" + countyID);
 
                     }
                 });
