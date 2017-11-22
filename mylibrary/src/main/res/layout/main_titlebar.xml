@@ -3,7 +3,7 @@
     android:id="@+id/titlebar"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:background="#fc8215">
+    android:background="@color/base_color">
 
     <LinearLayout
 
