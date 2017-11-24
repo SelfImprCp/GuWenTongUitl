@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -14,23 +13,13 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.cp.mylibrary.R;
-import com.cp.mylibrary.app.Config;
-import com.cp.mylibrary.interf.ShareListener;
-import com.cp.mylibrary.utils.ImageLoaderUtils;
 import com.cp.mylibrary.utils.LogCp;
 import com.cp.mylibrary.utils.StringUtils;
 import com.umeng.socialize.ShareAction;
-import com.umeng.socialize.UMAuthListener;
-import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
-import com.umeng.socialize.UmengTool;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-
-
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
-
-import java.util.Map;
 
 
 /**
@@ -148,6 +137,7 @@ public class ShareDialog extends CommonDialog implements
 
     @SuppressWarnings("deprecation")
     private void shareToWeiChatCircle() {
+
         LogCp.i(LogCp.CP, ShareDialog.class + " 来分享到weChat 朋友圈" + title + content + link + share_img_url);
 
 
@@ -169,6 +159,7 @@ public class ShareDialog extends CommonDialog implements
 
     @SuppressWarnings("deprecation")
     private void shareToWeiChat() {
+
         LogCp.i(LogCp.CP, ShareDialog.class + " 来分享到weChat  " + title + content + link + share_img_url);
 
         UMImage thumb = new UMImage(mActivity, R.drawable.ic_launcher);
@@ -199,7 +190,6 @@ public class ShareDialog extends CommonDialog implements
                 .withMedia(image)
                 .setCallback(umShareListener)
                 .share();
-
 
 
     }
@@ -251,6 +241,7 @@ public class ShareDialog extends CommonDialog implements
 
 
     };
+
 
     private void getSinaImg() {
 
