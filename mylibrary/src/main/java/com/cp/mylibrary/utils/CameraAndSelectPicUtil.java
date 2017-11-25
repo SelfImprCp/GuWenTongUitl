@@ -64,10 +64,10 @@ public class CameraAndSelectPicUtil {
 	private String protraitPath;
 	private String theLarge;
 
-	private int CROP_W = 200;
-	private int CROP_H = 200;
-	private int BILI_W = 200;
-	private int BILI_H = 200;
+	public int CROP_W = 200;
+	public int CROP_H = 200;
+	public int BILI_W = 200;
+	public int BILI_H = 200;
 
 
 	/**
@@ -329,6 +329,8 @@ public class CameraAndSelectPicUtil {
 		intent.putExtra("outputY", getCROP_H());
 		intent.putExtra("scale", true);// 去黑边
 		intent.putExtra("scaleUpIfNeeded", true);// 去黑边
+
+
 		mActivity.startActivityForResult(intent,
 				ImageUtils.REQUEST_CODE_GETIMAGE_BYSDCARD);
 	}
