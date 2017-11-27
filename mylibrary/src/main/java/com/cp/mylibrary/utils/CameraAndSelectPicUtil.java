@@ -379,6 +379,7 @@ public class CameraAndSelectPicUtil {
 		return BILI_H;
 	}
 
+
 	public void setBILI_H(int BILI_H) {
 		this.BILI_H = BILI_H;
 	}
