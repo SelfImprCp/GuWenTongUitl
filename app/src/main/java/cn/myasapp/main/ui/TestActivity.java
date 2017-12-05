@@ -132,6 +132,8 @@ public class TestActivity extends BaseActivity {
         setContentView(R.layout.activity_test);
 
 
+
+
 //        IDCardUitl idCardUitl = new IDCardUitl();
 //        String stringSex = idCardUitl.getSexForID("440111199507183369");
 //        LogCp.i(LogCp.CP, TestActivity.class + " 是否为 性别 ::" + stringSex);
