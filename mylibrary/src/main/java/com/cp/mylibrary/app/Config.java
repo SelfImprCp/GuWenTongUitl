@@ -21,8 +21,8 @@ public class Config {
      public static final String QQ_APPKEY = "dw1chPVQZ9YmBAkv";
 
 //TODO https
-     public static final String HTTP_HEAD = "https://";
-
+//     public static final String HTTP_HEAD = "https://";
+//
 
 
 

@@ -32,7 +32,7 @@ public class MyHttpClient {
 
 
         //TODO 这里要改请求头，上线的用https，线下的用http
-        API_URL = Config.HTTP_HEAD+ host + "/";
+        API_URL =   host + "/";
 
         // 初始化网络请求
         HttpConfig httpConfig = new HttpConfig();
