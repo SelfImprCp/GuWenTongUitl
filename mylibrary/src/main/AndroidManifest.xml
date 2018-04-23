@@ -91,9 +91,11 @@
 
         <!-- 我的 5625ecd667e58e19c1008322 ,,,ecc8e70c3cd241f1b02efc0622150582 -->
 
+
+
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5909347e677baa254f0002e1"></meta-data>
+            android:value="5acc1e5f8f4a9d5cae00002c"></meta-data>
              <meta-data
             android:name="UMENG_CHANNEL"
             android:value="Umeng"></meta-data>
