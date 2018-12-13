@@ -15,6 +15,9 @@ public class MyHttpClient {
     // public   static String HOST = "www.ailibuli.cn";
 
 
+
+
+
     public static MyHttpClient uitl;
 
     public static MyHttpClient getInstance() {
