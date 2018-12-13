@@ -18,6 +18,9 @@ android {
         }
     }
 }
+repositories {
+    flatDir { dirs 'libs' }
+}
 
 allprojects {
     repositories {
@@ -26,6 +29,7 @@ allprojects {
 
     }
 }
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
@@ -45,6 +49,3 @@ dependencies {
     compile 'com.android.support:design:24.2.1'
 }
 
-repositories {
-    flatDir { dirs 'libs' }
-}
