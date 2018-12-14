@@ -116,6 +116,7 @@
     <orderEntry type="library" exported="" name="umeng_social_shareboard" level="project" />
     <orderEntry type="library" exported="" name="SocialSDK_QQ_Simplify" level="project" />
     <orderEntry type="library" exported="" name="umeng_shareboard_widget" level="project" />
+    <orderEntry type="library" exported="" name="library-2.4.0" level="project" />
     <orderEntry type="library" exported="" name="httpmime-4.1.3" level="project" />
     <orderEntry type="library" exported="" name="umeng_social_net" level="project" />
     <orderEntry type="library" exported="" name="gson-2.7" level="project" />
@@ -123,9 +124,9 @@
     <orderEntry type="library" exported="" name="mta-sdk-1.6.2" level="project" />
     <orderEntry type="library" exported="" name="umeng_social_tool" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-24.2.1" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="hamcrest-core-1.3" level="project" />
     <orderEntry type="library" exported="" name="eventbus" level="project" />
     <orderEntry type="library" exported="" name="SocialSDK_WeChat_Simplify" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="hamcrest-core-1.3" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="junit-4.12" level="project" />
   </component>
 </module>
