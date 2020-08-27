@@ -32,6 +32,8 @@ public class TestApi {
         MyHttpParams params = new MyHttpParams();
         params.put("page", page);
 
+
+
         params.put("lng", "121.538123");
         params.put("lat", "31.677132");
         params.put("radius", 20000);
